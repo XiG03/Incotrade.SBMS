@@ -1,0 +1,6 @@
+@sbms.backend_HostAddress = http://localhost:5130
+
+GET {{sbms.backend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
