@@ -14,6 +14,7 @@ namespace sbms.backend.AppDbContext
         public DbSet<WorkSchedule> WorkSchedules { get; set; }
         public DbSet<Service> Services { get; set; }
         public DbSet<Booking> Bookings { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,7 +40,12 @@ namespace sbms.backend.AppDbContext
                 .HasOne(b => b.Service)
                 .WithMany(s => s.Bookings)
                 .HasForeignKey(b => b.ServiceId);
+
+            modelBuilder.Entity<RefreshToken>()
+                .HasOne(rt => rt.AppUser)
+                .WithMany(au => au.RefreshTokens)
+                .HasForeignKey(rt => rt.UserId);
         }
     }
-    
+
 }

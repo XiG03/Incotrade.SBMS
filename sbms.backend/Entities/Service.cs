@@ -7,7 +7,7 @@
         public string Description { get; set; }
         public decimal DurationMinutes { get; set; }
         public decimal Price { get; set; }
-        public bool IsActive { get; set; }
+        public bool IsActive { get; set; } = true;
         public ICollection<Booking> Bookings { get; set; }
     }
 }

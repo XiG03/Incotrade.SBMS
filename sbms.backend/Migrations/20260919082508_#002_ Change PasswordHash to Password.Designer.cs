@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using sbms.backend.AppDbContext;
 
@@ -11,9 +12,11 @@ using sbms.backend.AppDbContext;
 namespace sbms.backend.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260919082508_#002_ Change PasswordHash to Password")]
+    partial class _002_ChangePasswordHashtoPassword
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,35 +140,6 @@ namespace sbms.backend.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("sbms.backend.Entities.RefreshToken", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("ExpiryTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<bool>("IsRevoked")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("refreshToken")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("RefreshTokens");
-                });
-
             modelBuilder.Entity("sbms.backend.Entities.Service", b =>
                 {
                     b.Property<Guid>("Id")
@@ -279,17 +253,6 @@ namespace sbms.backend.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("sbms.backend.Entities.RefreshToken", b =>
-                {
-                    b.HasOne("sbms.backend.Entities.AppUser", "AppUser")
-                        .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AppUser");
-                });
-
             modelBuilder.Entity("sbms.backend.Entities.WorkSchedule", b =>
                 {
                     b.HasOne("sbms.backend.Entities.Staff", "Staff")
@@ -304,8 +267,6 @@ namespace sbms.backend.Migrations
             modelBuilder.Entity("sbms.backend.Entities.AppUser", b =>
                 {
                     b.Navigation("Customers");
-
-                    b.Navigation("RefreshTokens");
                 });
 
             modelBuilder.Entity("sbms.backend.Entities.Customer", b =>
