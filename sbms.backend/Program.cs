@@ -7,6 +7,7 @@ using sbms.backend.AppDbContext;
 using sbms.backend.Helpers;
 using sbms.backend.Modules.Auth.Services;
 using sbms.backend.Modules.Services.Services;
+using sbms.backend.Modules.Staff.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,8 @@ builder.Services.AddScoped<IJWTService, JWTService>();
 // Dang ky cac service cua bai test
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
 
 
 builder.Services.AddAuthentication(options =>
