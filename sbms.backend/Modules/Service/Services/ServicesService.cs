@@ -88,7 +88,7 @@ namespace sbms.backend.Modules.Services.Services
             {
                 return new APIResponse<List<ServicesResponse>>
                 {
-                    statusCode = StatusCodes.Status400BadRequest,
+                    statusCode = StatusCodes.Status200OK,
                     Message = "Services not found",
                     Data = null
                 };
