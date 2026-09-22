@@ -4,8 +4,10 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using sbms.backend.AppDbContext;
+using sbms.backend.Entities;
 using sbms.backend.Helpers;
 using sbms.backend.Modules.Auth.Services;
+using sbms.backend.Modules.Booking.Service;
 using sbms.backend.Modules.Services.Services;
 using sbms.backend.Modules.Staff.Service;
 
@@ -31,6 +33,7 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
 builder.Services.AddScoped<IStaffService, StaffService>();
 builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 
 builder.Services.AddAuthentication(options =>
