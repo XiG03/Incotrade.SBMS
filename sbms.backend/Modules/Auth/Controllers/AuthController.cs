@@ -18,6 +18,10 @@ namespace sbms.backend.Modules.Auth.Controllers
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
         {
             var response = await _authService.LoginAsync(request);
+            if(response.Data == null)
+            {
+                return StatusCode(response.statusCode, response);
+            }
             Response.Cookies.Append("refreshToken", response.Data?.RefreshToken, new CookieOptions
             {
                 HttpOnly = true,

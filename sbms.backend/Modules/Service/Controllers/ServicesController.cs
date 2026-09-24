@@ -30,14 +30,14 @@ namespace sbms.backend.Modules.Services.Controllers
             return StatusCode(response.statusCode, response);
         }
         // Active
-        [HttpGet]
+        [HttpGet("active")]
         public async Task<IActionResult> GetActiveServicesAsync()
         {
             var response = await _serviceService.GetActiveServicesAsync();
             return StatusCode(response.statusCode, response);
         }
         // Active
-        [HttpGet]
+        [HttpGet("inactive")]
         public async Task<IActionResult> GetInActiveServicesAsync()
         {
             var response = await _serviceService.GetInActiveServicesAsync();

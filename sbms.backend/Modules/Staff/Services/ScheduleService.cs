@@ -35,11 +35,9 @@ namespace sbms.backend.Modules.Staff.Service
                 // Bước 1
                 var now = DateTime.UtcNow;
 
-                var startDateTime = request.WorkDate.Date
-                    .Add(request.StartTime.TimeOfDay);
+                var startDateTime = request.WorkDate.ToDateTime(request.StartTime);
 
-                var endDateTime = request.WorkDate.Date
-                    .Add(request.EndTime.TimeOfDay);
+                var endDateTime = request.WorkDate.ToDateTime(request.EndTime);
 
                 if (startDateTime <= now)
                 {
@@ -79,13 +77,14 @@ namespace sbms.backend.Modules.Staff.Service
 
                 // Bước 3: Nếu có, kiểm tra có ca trùng hay không?
 
-                var conflictschedule = await _context.WorkSchedules
-                    .AnyAsync(ws => ws.StaffId == request.StaffId
-                            && ws.WorkDate.Date == request.WorkDate.Date
-                            && ws.EndTime.TimeOfDay > request.StartTime.TimeOfDay
-                            && ws.StartTime.TimeOfDay < request.EndTime.TimeOfDay);
+                var conflictSchedule = await _context.WorkSchedules
+                            .AnyAsync(ws =>
+                                ws.StaffId == request.StaffId &&
+                                ws.WorkDate.Date == request.WorkDate.ToDateTime(TimeOnly.MinValue).Date &&
+                                ws.EndTime > startDateTime &&
+                                ws.StartTime < endDateTime);
 
-                if (conflictschedule)
+                if (conflictSchedule)
                 {
                     transaction.RollbackAsync();
                     return new APIResponse<CreateStaffScheduleResponse>
@@ -104,9 +103,9 @@ namespace sbms.backend.Modules.Staff.Service
                 {
                     Id = ScheduleId,
                     StaffId = request.StaffId,
-                    WorkDate = request.WorkDate,
-                    StartTime = request.StartTime,
-                    EndTime = request.EndTime
+                    WorkDate = request.WorkDate.ToDateTime(TimeOnly.MinValue),
+                    StartTime = request.WorkDate.ToDateTime(request.StartTime),
+                    EndTime = request.WorkDate.ToDateTime(request.EndTime)
                 });
 
                 var result = await _context.SaveChangesAsync();
@@ -159,9 +158,9 @@ namespace sbms.backend.Modules.Staff.Service
                 {
                     Id = ws.Id,
                     StaffId = ws.StaffId,
-                    WorkDate = ws.WorkDate,
-                    StartTime = ws.StartTime,
-                    EndTime = ws.EndTime
+                    WorkDate = DateOnly.FromDateTime(ws.WorkDate),
+                    StartTime = TimeOnly.FromDateTime(ws.StartTime),
+                    EndTime = TimeOnly.FromDateTime(ws.EndTime)
 
                 }).ToListAsync();
 

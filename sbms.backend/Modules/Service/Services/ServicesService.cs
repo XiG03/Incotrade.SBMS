@@ -122,8 +122,8 @@ namespace sbms.backend.Modules.Services.Services
             {
                 return new APIResponse<List<ServicesResponse>>
                 {
-                    statusCode = StatusCodes.Status400BadRequest,
-                    Message = "Services not found",
+                    statusCode = StatusCodes.Status200OK,
+                    Message = "Services Inactive Empty",
                     Data = null
                 };
             }
@@ -180,7 +180,7 @@ namespace sbms.backend.Modules.Services.Services
                 return new APIResponse<ServicesUpdateResponse>
                 {
                     statusCode = StatusCodes.Status400BadRequest,
-                    Message = "Can not update Services",
+                    Message = "Service not exists",
                     Data = null
                 };
             }
