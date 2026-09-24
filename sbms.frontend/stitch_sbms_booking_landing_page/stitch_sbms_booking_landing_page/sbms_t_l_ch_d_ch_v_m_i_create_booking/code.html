@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+
+<html lang="vi"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0" name="viewport"/><meta content="web_standard" name="shell-type"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><style>@layer base{html,body{margin:0;padding:0;}body{overscroll-behavior:none;}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config={darkMode:"class",theme:{extend:{"colors":{"on-surface-variant":"#434655","tertiary":"#006058","tertiary-fixed":"#89f5e7","on-secondary":"#ffffff","on-primary-container":"#eeefff","on-primary":"#ffffff","secondary-fixed-dim":"#b9c7df","on-tertiary-container":"#b3fff3","surface-container-highest":"#d3e4fe","on-background":"#0b1c30","secondary-container":"#d5e3fc","secondary":"#515f74","on-secondary-fixed":"#0d1c2e","on-error":"#ffffff","outline":"#737686","surface-bright":"#f8f9ff","tertiary-container":"#007b71","on-surface":"#0b1c30","on-tertiary-fixed-variant":"#005049","surface-container":"#e5eeff","error-container":"#ffdad6","surface":"#f8f9ff","on-secondary-fixed-variant":"#3a485b","on-tertiary":"#ffffff","outline-variant":"#c3c6d7","on-secondary-container":"#57657a","error":"#ba1a1a","primary-fixed-dim":"#b4c5ff","secondary-fixed":"#d5e3fc","on-error-container":"#93000a","inverse-surface":"#213145","surface-container-high":"#dce9ff","background":"#f8f9ff","surface-container-low":"#eff4ff","inverse-on-surface":"#eaf1ff","surface-tint":"#0053db","surface-dim":"#cbdbf5","inverse-primary":"#b4c5ff","surface-variant":"#d3e4fe","on-primary-fixed-variant":"#003ea8","tertiary-fixed-dim":"#6bd8cb","primary":"#004ac6","on-primary-fixed":"#00174b","primary-fixed":"#dbe1ff","primary-container":"#2563eb","surface-container-lowest":"#ffffff","on-tertiary-fixed":"#00201d"},"borderRadius":{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","full":"9999px"},"spacing":{"gutter-sm":"1rem","space-xs":"0.25rem","margin-lg":"3rem","gutter":"1.5rem","space-md":"1rem","space-xl":"2rem","margin-sm":"1rem","margin":"2rem","gutter-lg":"2rem","space-lg":"1.5rem","space-sm":"0.5rem"},"fontFamily":{"label-lg":["Plus Jakarta Sans"],"label-sm":["Plus Jakarta Sans"],"body-md":["Plus Jakarta Sans"],"headline-sm":["Plus Jakarta Sans"],"headline-lg":["Plus Jakarta Sans"],"body-sm":["Plus Jakarta Sans"],"title-md":["Plus Jakarta Sans"],"body-lg":["Plus Jakarta Sans"],"display-mobile":["Plus Jakarta Sans"],"headline-md":["Plus Jakarta Sans"],"headline-lg-mobile":["Plus Jakarta Sans"],"display":["Plus Jakarta Sans"],"label-md":["Plus Jakarta Sans"]},"fontSize":{"label-lg":["0.875rem",{"lineHeight":"1.25rem","letterSpacing":"0.01em","fontWeight":"600"}],"label-sm":["0.6875rem",{"lineHeight":"0.875rem","letterSpacing":"0.04em","fontWeight":"600"}],"body-md":["0.875rem",{"lineHeight":"1.5rem","fontWeight":"400"}],"headline-sm":["1.25rem",{"lineHeight":"1.75rem","letterSpacing":"-0.01em","fontWeight":"600"}],"headline-lg":["2rem",{"lineHeight":"2.5rem","letterSpacing":"-0.02em","fontWeight":"700"}],"body-sm":["0.75rem",{"lineHeight":"1.25rem","fontWeight":"400"}],"title-md":["1.125rem",{"lineHeight":"1.625rem","fontWeight":"600"}],"body-lg":["1rem",{"lineHeight":"1.625rem","fontWeight":"400"}],"display-mobile":["2.25rem",{"lineHeight":"2.75rem","letterSpacing":"-0.02em","fontWeight":"700"}],"headline-md":["1.5rem",{"lineHeight":"2rem","letterSpacing":"-0.015em","fontWeight":"600"}],"headline-lg-mobile":["1.5rem",{"lineHeight":"2rem","letterSpacing":"-0.01em","fontWeight":"700"}],"display":["3rem",{"lineHeight":"3.75rem","letterSpacing":"-0.03em","fontWeight":"700"}],"label-md":["0.75rem",{"lineHeight":"1rem","letterSpacing":"0.02em","fontWeight":"600"}]}}}}</script></head><body class="bg-surface font-body-md text-body-md text-on-surface antialiased selection:bg-primary-fixed selection:text-on-primary-fixed"><header class="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/95 backdrop-blur-md shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 max-w-7xl mx-auto px-gutter-sm lg:px-gutter flex items-center justify-between gap-space-md"><div class="flex items-center gap-space-lg"><div class="flex items-center gap-space-sm"><img alt="Brand logo. - Primary color: #2563eb - Font: plusJakartaSans - Mode: light - Roundness: rounded-md" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida/AEtjO1XmFMyVtxYpcyUH5rXLew4t89-gggdg5nD7LxHGDI_PdEK5I9DvIQgN6NwhiUhvsH51gQQkzHHTxnDe3hsHqeliviaxpo7emTBPmH85ybKryYCQOEjnL59HZq1ofSCP3RQQlKvyFLr09Azm8U3nnZbPzgkQojym280G2TABXuK0t3lmUE0R_j2gqg7m95ags8NW0XR9OW4VThpoIAtqshywbvAt26goNedTTKHpWWYJLmb1pjEMVRJgUHg"/><span class="font-title-md text-title-md text-on-surface tracking-tight font-bold">SBMS</span><span class="inline-flex items-center px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">Khách hàng</span></div><nav class="hidden md:flex items-center gap-space-xs p-1 bg-surface-container-low rounded-xl" data-active-classes="bg-primary-container text-on-primary rounded-lg shadow-sm"><a class="px-space-md py-1.5 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="lich-hen-cua-toi" href="#">Lịch hẹn của tôi</a><a class="px-space-md py-1.5 rounded-lg font-label-lg text-label-lg text-on-surface-variant hover:text-on-surface transition-colors" data-path="khung-gio-trong" href="#">Khung giờ trống</a></nav></div><div class="flex items-center gap-space-md"><a class="inline-flex items-center gap-space-xs px-space-md py-2 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container transition-colors shadow-sm" data-path="dat-lich-moi" href="#"><span class="material-symbols-outlined text-[18px]">add</span><span>Đặt lịch mới</span></a><button aria-label="Thông báo" class="relative p-2 rounded-lg text-on-surface-variant hover:bg-surface-container-high hover:text-on-surface transition-colors" type="button"><span class="material-symbols-outlined text-[22px]">notifications</span><span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span></button><div class="flex items-center gap-space-sm pl-space-xs"><div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center"><span class="material-symbols-outlined text-on-primary text-[18px]">person</span></div><div class="hidden lg:flex flex-col text-left"><span class="font-label-md text-label-md text-on-surface leading-tight">Nguyễn Minh Anh</span><span class="font-label-sm text-label-sm text-on-surface-variant leading-tight">Thành viên VIP</span></div><span class="material-symbols-outlined text-on-surface-variant text-[20px] hidden sm:block">expand_more</span></div></div></div></header><main class="w-full pt-16 bg-surface min-h-[calc(100vh-5rem)]"><div class="flex flex-col w-full">
+<div class="max-w-7xl mx-auto w-full px-gutter-sm lg:px-gutter py-space-md lg:py-space-xl">
+<!-- Top Flow Header & Breadcrumb -->
+<div class="flex flex-col gap-space-sm mb-space-lg">
+<nav class="flex items-center gap-space-xs text-body-sm font-body-sm text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Trang chủ</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Đặt lịch dịch vụ</a>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold">Nhập thông tin &amp; Xác nhận</span>
+</nav>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-sm">
+<div>
+<div class="flex items-center gap-space-sm flex-wrap">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Đặt lịch hẹn dịch vụ</h1>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px] text-tertiary">bolt</span>
+              Giữ chỗ thông minh - Xác nhận tức thì
+            </span>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Vui lòng kiểm tra thông tin chuyên viên, thời gian và phương thức xác nhận trước khi hoàn tất đăng ký.
+          </p>
+</div>
+<!-- Live Hold Countdown Badge -->
+<div class="flex items-center gap-space-sm px-space-md py-2 rounded-xl bg-surface-container-low self-start sm:self-auto shadow-sm">
+<span class="material-symbols-outlined text-primary text-[20px] animate-pulse">timer</span>
+<div class="flex flex-col text-left">
+<span class="font-label-sm text-label-sm text-on-surface-variant">Thời gian giữ chỗ:</span>
+<span class="font-label-lg text-label-lg text-primary font-bold tracking-wider" id="countdown-timer">09:45</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Stepper Progress Bar -->
+<div class="mb-space-xl p-space-md lg:p-space-lg rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-space-md relative">
+<!-- Step 1 (Completed) -->
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-tertiary block uppercase tracking-wider">Bước 1</span>
+<span class="font-label-md text-label-md text-on-surface truncate block">Dịch vụ &amp; Chuyên gia</span>
+</div>
+</div>
+<!-- Step 2 (Completed) -->
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[18px]">check</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-tertiary block uppercase tracking-wider">Bước 2</span>
+<span class="font-label-md text-label-md text-on-surface truncate block">Ngày &amp; Giờ hẹn</span>
+</div>
+</div>
+<!-- Step 3 (Current / Active) -->
+<div class="flex items-center gap-space-sm">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary flex items-center justify-center shrink-0 shadow-md ring-4 ring-primary-fixed">
+<span class="font-label-md text-label-md font-bold">3</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-primary block uppercase tracking-wider font-bold">Bước 3</span>
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate block">Thông tin &amp; Xác nhận</span>
+</div>
+</div>
+<!-- Step 4 (Pending) -->
+<div class="flex items-center gap-space-sm opacity-60">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-on-surface-variant flex items-center justify-center shrink-0">
+<span class="font-label-md text-label-md">4</span>
+</div>
+<div class="min-w-0">
+<span class="font-label-sm text-label-sm text-on-surface-variant block uppercase tracking-wider">Bước 4</span>
+<span class="font-label-md text-label-md text-on-surface truncate block">Hoàn tất &amp; Mã QR</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Main Booking Content: 2-Column Responsive Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-start">
+<!-- LEFT COLUMN: Form Sections (approx 65% / 7 cols or 8 cols) -->
+<div class="lg:col-span-7 xl:col-span-8 flex flex-col gap-space-lg">
+<!-- Section 1: Customer Information -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">person_outline</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">1. Thông tin khách hàng</h2>
+</div>
+<span class="inline-flex items-center gap-1 px-space-sm py-0.5 rounded-full bg-secondary-container text-on-secondary-container font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[14px]">workspace_premium</span>
+              Thành viên VIP (-5%)
+            </span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Thông tin đã được đồng bộ tự động theo hồ sơ của bạn. Bạn có thể cập nhật thông tin nếu đặt hẹn hộ người thân.
+          </p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Full Name -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface flex items-center justify-between">
+<span>Họ và tên khách hàng <span class="text-error">*</span></span>
+<span class="font-label-sm text-label-sm text-primary font-normal cursor-pointer hover:underline" onclick="document.getElementById('fullname-input').select()">Đổi người đi</span>
+</label>
+<div class="relative">
+<input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm placeholder:text-outline" id="fullname-input" placeholder="Nhập họ và tên..." type="text" value="Nguyễn Minh Anh"/>
+<span class="material-symbols-outlined absolute right-3 top-2.5 text-primary text-[20px]">verified</span>
+</div>
+</div>
+<!-- Phone -->
+<div class="flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface">
+                Số điện thoại liên hệ <span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full pl-10 pr- space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm placeholder:text-outline" type="tel" value="0987 654 321"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">call</span>
+<span class="absolute right-3 top-2.5 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed-variant font-label-sm text-label-sm flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[12px]">chat</span> Zalo/SMS
+                </span>
+</div>
+</div>
+<!-- Email -->
+<div class="md:col-span-2 flex flex-col gap-space-xs">
+<label class="font-label-md text-label-md text-on-surface">
+                Email nhận phiếu xác nhận &amp; Hóa đơn điện tử <span class="text-error">*</span>
+</label>
+<div class="relative">
+<input class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm placeholder:text-outline" type="email" value="minhanh.nguyen@email.com"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant text-[20px]">mail</span>
+</div>
+</div>
+<!-- Booking Notes -->
+<div class="md:col-span-2 flex flex-col gap-space-xs">
+<div class="flex items-center justify-between">
+<label class="font-label-md text-label-md text-on-surface">Ghi chú &amp; Lưu ý sức khỏe (Tùy chọn)</label>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Tối đa 200 ký tự</span>
+</div>
+<textarea class="w-full p-space-md rounded-lg bg-surface-container-lowest text-on-surface font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container shadow-sm resize-none placeholder:text-outline" placeholder="Ví dụ: Da tôi khá nhạy cảm, dễ ửng đỏ, ưu tiên phòng yên tĩnh không mùi nước hoa đậm..." rows="3"></textarea>
+</div>
+</div>
+</div>
+<!-- Section 2: Service & Specialist Overview -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">spa</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">2. Chi tiết dịch vụ &amp; Chuyên viên</h2>
+</div>
+<button class="font-label-md text-label-md text-primary hover:underline flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">edit</span>
+              Thay đổi
+            </button>
+</div>
+<!-- Service Card Inner -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row gap-space-md items-start sm:items-center justify-between">
+<div class="flex items-start gap-space-md">
+<div class="w-16 h-16 rounded-lg overflow-hidden shrink-0 shadow-sm relative">
+<img class="w-full h-full object-cover" data-alt="Close up of a tranquil facial skincare therapy session with cool blue LED light accents and modern dermatological devices, clean aesthetic, serene spa environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDAqmx9Xx74O0HmB_zSwuWTmApDbGNseFHFHewLlV4_1D5u0gaAV-c4JvzmEzNoRLx5ZLEr7FzAv8HSDWKi7Ka4rJppLq-Q-bDABtn8KeYhAFspEzdW5Nn18mwzmhOWBHRL-5Asyt8Mvdr5HI0UA7e2oZy3s_ys9WfShMA9ExfpRQlfniAcVM5T0P3oaPdfFd4Ql4rWIX8u2Z6Taf0KvpWdnTPLl9Y554gfQPSHOhkOaYaUGvHYeQtehQ"/>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs flex-wrap">
+<span class="px-space-xs py-0.5 rounded bg-primary text-on-primary font-label-sm text-label-sm">Spa &amp; Trị liệu</span>
+<span class="px-space-xs py-0.5 rounded bg-surface-container-highest text-on-surface font-label-sm text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">schedule</span> 90 phút
+                  </span>
+</div>
+<h3 class="font-title-md text-title-md text-on-surface font-semibold mt-1">
+                  Chăm sóc da chuyên sâu Hydra Facial &amp; Trẻ hóa công nghệ cao
+                </h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant line-clamp-1">
+                  Liệu trình làm sạch lỗ chân lông đa tầng, cấp ẩm tầng sâu và kích thích sinh collagen tươi.
+                </p>
+</div>
+</div>
+<div class="text-right sm:self-center shrink-0">
+<div class="font-title-md text-title-md text-primary font-bold">1.200.000 đ</div>
+<span class="font-label-sm text-label-sm text-on-surface-variant">Giá niêm yết</span>
+</div>
+</div>
+<!-- Specialist / Doctor Assignment -->
+<div class="p-space-md rounded-xl bg-surface-container flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+<div class="flex items-center gap-space-md">
+<div class="relative">
+<div class="w-12 h-12 rounded-full overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Professional portrait of an experienced Asian dermatologist doctor in clean white medical coat with friendly approachable expression in bright modern clinic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjPkgZNRa42wbGfN0ab-4No4PT1-_ZjOLvx-xOnERdzJMdH_ifn-4KA342hn0n0vGW2n0G7o-YqwA31eeR5C0Gu0TIgasA7Yjn2Qoed-bL0s0M8sPg6-tNhhg-75-pNszvQAkUgLGNYAVUIdR7F_mBR_pQEXIDB-VhmibYXH1wYCZQAcCoREHoof7OxaDEqSH50g6mtmVxgAOVjUgKtSV97sW-XKTdQNuuUtwdzi84dd6-t1438w20hw"/>
+</div>
+<span class="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-tertiary text-on-tertiary flex items-center justify-center shadow">
+<span class="material-symbols-outlined text-[12px]">medical_services</span>
+</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-space-xs">
+<span class="font-label-lg text-label-lg text-on-surface font-bold">BS. Hoàng Nam</span>
+<span class="inline-flex items-center gap-0.5 font-label-sm text-label-sm text-on-surface font-semibold bg-surface-container-lowest px-1.5 py-0.5 rounded-full">
+<span class="material-symbols-outlined text-[14px] text-amber-500 fill-1" style="font-variation-settings: 'FILL' 1;">star</span> 4.9
+                  </span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">
+                  Chuyên gia Da liễu Cấp cao - 8 năm kinh nghiệm SBMS
+                </span>
+<span class="font-label-sm text-label-sm text-primary flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span>
+                  Khách hàng đã trực tiếp chọn chuyên viên này
+                </span>
+</div>
+</div>
+<button class="px-space-md py-1.5 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-surface-container-high transition-colors font-label-md text-label-md shrink-0 shadow-sm" type="button">
+              Đổi Kỹ thuật viên
+            </button>
+</div>
+</div>
+<!-- Section 3: Booking Date & Start Time -->
+<div class="p-space-lg rounded-xl bg-surface-container-lowest shadow-sm flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<div class="flex items-center gap-space-sm">
+<div class="w-9 h-9 rounded-lg bg-surface-container flex items-center justify-center text-primary">
+<span class="material-symbols-outlined text-[20px]">calendar_month</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">3. Thời gian lịch hẹn đã chọn</h2>
+</div>
+<button class="font-label-md text-label-md text-primary hover:underline flex items-center gap-1" type="button">
+<span class="material-symbols-outlined text-[16px]">schedule</span>
+              Chọn giờ khác
+            </button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-space-md">
+<!-- Selected Date Box -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-primary text-on-primary flex flex-col items-center justify-center shrink-0 shadow-sm">
+<span class="font-label-sm text-label-sm font-semibold uppercase">Th 4</span>
+<span class="font-headline-sm text-headline-sm leading-none font-bold">23</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-bold">Thứ 4, ngày 23/10/2024</span>
+<span class="px-1.5 py-0.5 rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm">Hôm nay</span>
+</div>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lịch hẹn không bị trùng với sự kiện khác</span>
+</div>
+</div>
+<!-- Selected Time Slot Box -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<div class="w-12 h-12 rounded-lg bg-tertiary-container text-on-tertiary flex items-center justify-center shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[26px]">alarm</span>
+</div>
+<div class="flex flex-col">
+<div class="flex items-center gap-1.5">
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">14:00 - 15:30</span>
+</div>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px]">lock_clock</span>
+                  Khung giờ VIP đang giữ riêng cho bạn
+                </span>
+</div>
+</div>
+</div>
+<!-- Notification Toggles / Sync Settings -->
+<div class="pt-space-sm flex flex-col gap-space-sm">
+<span class="font-label-md text-label-md text-on-surface">Tùy chọn đồng bộ &amp; Nhắc lịch thông minh:</span>
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Nhận thông báo xác nhận &amp; nhắc lịch tự động qua tin nhắn Zalo ZNS trước 2 tiếng</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Hỗ trợ nhận đường dẫn chỉ đường GPS và mã check-in không chạm tại sảnh.</span>
+</div>
+</label>
+<label class="flex items-start gap-space-sm p-space-sm rounded-lg hover:bg-surface-container-low cursor-pointer transition-colors">
+<input checked="" class="mt-1 w-4 h-4 rounded text-primary-container focus:ring-primary focus:ring-offset-0" type="checkbox"/>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-medium">Tự động đồng bộ vào Google Calendar / Apple Calendar</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Lịch trình của bạn sẽ tự động thêm nhắc nhở trước 1 ngày và trước 60 phút.</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- RIGHT COLUMN: Booking Summary Ticket & Payment Options (approx 35% / 5 cols or 4 cols) -->
+<div class="lg:col-span-5 xl:col-span-4 flex flex-col gap-space-md sticky top-20">
+<!-- Modern Ticket Style Summary Card -->
+<div class="rounded-xl bg-surface-container-lowest shadow-md overflow-hidden relative">
+<!-- Top Accent Band -->
+<div class="h-2 bg-gradient-to-r from-primary via-primary-container to-tertiary"></div>
+<div class="p-space-lg flex flex-col gap-space-md">
+<div class="flex items-center justify-between">
+<span class="font-label-sm text-label-sm text-primary uppercase font-bold tracking-wider">Phiếu Đặt Lịch SBMS</span>
+<span class="px-2 py-0.5 rounded-full bg-surface-container text-on-surface font-label-sm text-label-sm font-semibold">Mã nháp #SB-8821</span>
+</div>
+<!-- Branch & Location -->
+<div class="flex items-start gap-space-sm p-space-sm rounded-lg bg-surface-container-low">
+<span class="material-symbols-outlined text-primary text-[20px] shrink-0 mt-0.5">location_on</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-bold">SBMS Chi nhánh Quận 3</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">128 Nguyễn Đình Chiểu, P. Võ Thị Sáu, Q.3, TP.HCM</span>
+<span class="font-label-sm text-label-sm text-tertiary font-semibold mt-0.5">Khu dịch vụ Da liễu - Phòng VIP A2</span>
+</div>
+</div>
+<!-- Divider Line with Ticket Notches -->
+<div class="relative py-space-xs flex items-center justify-center">
+<div class="w-full h-px border-b border-dashed border-outline-variant"></div>
+</div>
+<!-- Price Breakdown Calculation -->
+<div class="flex flex-col gap-space-xs font-body-md text-body-md">
+<div class="flex justify-between items-center text-on-surface-variant">
+<span>Giá dịch vụ niêm yết:</span>
+<span class="font-label-md text-label-md text-on-surface">1.200.000 đ</span>
+</div>
+<div class="flex justify-between items-center text-tertiary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">local_offer</span>
+                  Flash Deal khung giờ vàng (-15%):
+                </span>
+<span class="font-label-md text-label-md font-semibold">-180.000 đ</span>
+</div>
+<div class="flex justify-between items-center text-primary">
+<span class="flex items-center gap-1">
+<span class="material-symbols-outlined text-[16px]">stars</span>
+                  Đặc quyền VIP Membership (-5%):
+                </span>
+<span class="font-label-md text-label-md font-semibold">-60.000 đ</span>
+</div>
+<div class="pt-space-xs flex justify-between items-baseline">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">Tổng giá trị liệu trình:</span>
+<span class="font-headline-sm text-headline-sm text-on-surface font-bold">960.000 đ</span>
+</div>
+<!-- Deposit Highlight Card -->
+<div class="mt-space-sm p-space-md rounded-xl bg-surface-container flex flex-col gap-1">
+<div class="flex justify-between items-center">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Đặt cọc giữ chỗ trước (30%):</span>
+<span class="font-headline-sm text-headline-sm text-primary font-bold">288.000 đ</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                  Số tiền còn lại <span class="font-semibold text-on-surface">672.000 đ</span> sẽ được thanh toán trực tiếp tại sảnh sau khi hoàn thành buổi trị liệu.
+                </p>
+</div>
+</div>
+<!-- Payment Methods for Deposit -->
+<div class="flex flex-col gap-space-xs">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Hình thức đặt cọc tiện lợi:</span>
+<div class="grid grid-cols-3 gap-space-xs">
+<!-- Option 1: VietQR -->
+<label class="flex flex-col items-center justify-center p-space-sm rounded-lg bg-surface-container-lowest shadow-sm hover:bg-surface-container-high cursor-pointer transition-all border-2 border-primary">
+<input checked="" class="sr-only" name="payment-method" type="radio"/>
+<span class="material-symbols-outlined text-primary text-[22px]">qr_code_scanner</span>
+<span class="font-label-sm text-label-sm text-primary font-bold mt-1">VietQR</span>
+<span class="font-label-sm text-[10px] text-tertiary">Khuyên dùng</span>
+</label>
+<!-- Option 2: MoMo -->
+<label class="flex flex-col items-center justify-center p-space-sm rounded-lg bg-surface-container-low shadow-sm hover:bg-surface-container-high cursor-pointer transition-all">
+<input class="sr-only" name="payment-method" type="radio"/>
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">account_balance_wallet</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold mt-1">Ví MoMo</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Tức thì</span>
+</label>
+<!-- Option 3: Card -->
+<label class="flex flex-col items-center justify-center p-space-sm rounded-lg bg-surface-container-low shadow-sm hover:bg-surface-container-high cursor-pointer transition-all">
+<input class="sr-only" name="payment-method" type="radio"/>
+<span class="material-symbols-outlined text-on-surface-variant text-[22px]">credit_card</span>
+<span class="font-label-sm text-label-sm text-on-surface font-semibold mt-1">Visa/Master</span>
+<span class="font-label-sm text-[10px] text-on-surface-variant">Thẻ ATM</span>
+</label>
+</div>
+</div>
+<!-- Primary Action Button -->
+<button class="w-full py-3.5 px-space-md rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-bold hover:bg-primary-container transition-all shadow-md flex items-center justify-center gap-space-sm group" id="btn-confirm-booking" type="button">
+<span>Xác nhận đặt lịch ngay (288.000 đ)</span>
+<span class="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<!-- Policy Assurance Details -->
+<div class="flex flex-col gap-1.5 pt-space-xs">
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px] shrink-0">check_circle</span>
+<span>Hoàn cọc 100% nếu hủy trước giờ hẹn tối thiểu 4 tiếng.</span>
+</div>
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-tertiary">
+<span class="material-symbols-outlined text-[16px] shrink-0">published_with_changes</span>
+<span>Miễn phí dời lịch hẹn sang ngày khác trong tháng.</span>
+</div>
+<div class="flex items-center gap-1.5 text-body-sm font-body-sm text-on-surface-variant pt-1">
+<span class="material-symbols-outlined text-[16px] shrink-0 text-primary">support_agent</span>
+<span>Hỗ trợ kỹ thuật &amp; khẩn cấp: <a class="font-bold text-primary hover:underline" href="tel:19001234">1900 1234</a> (24/7)</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Safe & Secure Guarantee Banner -->
+<div class="p-space-md rounded-xl bg-surface-container-low flex items-center gap-space-md">
+<span class="material-symbols-outlined text-tertiary text-[28px] shrink-0">encrypted</span>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface font-semibold">Bảo mật chuẩn y tế &amp; Dịch vụ</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant">Dữ liệu cá nhân và lịch sử chăm sóc của bạn được mã hóa an toàn theo chuẩn PCI DSS.</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Quick FAQ / Pre-Appointment Instructions Section -->
+<div class="mt-space-xl p-space-lg rounded-xl bg-surface-container-lowest shadow-sm">
+<div class="flex items-center gap-space-sm mb-space-md">
+<span class="material-symbols-outlined text-primary text-[22px]">info</span>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Lưu ý trước khi đến buổi hẹn</h3>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-space-md">
+<div class="flex flex-col gap-1 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface font-semibold">
+<span class="material-symbols-outlined text-primary text-[18px]">access_time</span>
+            Thời gian có mặt
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Quý khách vui lòng đến trước 10-15 phút để thưởng thức trà thảo mộc thải độc và soi da phân tích trước liệu trình.
+          </p>
+</div>
+<div class="flex flex-col gap-1 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface font-semibold">
+<span class="material-symbols-outlined text-primary text-[18px]">qr_code_2</span>
+            Mã Check-in Không Chạm
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Ngay sau khi đặt cọc, mã QR check-in sẽ được gửi vào Zalo và hiển thị tại màn hình xác nhận để vào phòng ngay không cần đợi.
+          </p>
+</div>
+<div class="flex flex-col gap-1 p-space-md rounded-lg bg-surface-container-low">
+<div class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface font-semibold">
+<span class="material-symbols-outlined text-primary text-[18px]">local_parking</span>
+            Bãi đỗ xe ô tô &amp; xe máy
+          </div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+            Cơ sở 128 Nguyễn Đình Chiểu có hầm đỗ xe ô tô rộng rãi miễn phí cho khách hàng có lịch hẹn đã xác nhận.
+          </p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+  // Dynamic countdown timer for holding slot
+  (function() {
+    let timeLeft = 9 * 60 + 45; // 09:45
+    const timerElement = document.getElementById('countdown-timer');
+    if (!timerElement) return;
+
+    const interval = setInterval(function() {
+      if (timeLeft <= 0) {
+        clearInterval(interval);
+        timerElement.textContent = "00:00 (Hết hạn)";
+        timerElement.classList.add("text-error");
+        return;
+      }
+      timeLeft--;
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerElement.textContent = 
+        (minutes < 10 ? "0" + minutes : minutes) + ":" + 
+        (seconds < 10 ? "0" + seconds : seconds);
+    }, 1000);
+
+    // Interactive button confirmation micro-animation
+    const confirmBtn = document.getElementById('btn-confirm-booking');
+    if (confirmBtn) {
+      confirmBtn.addEventListener('click', function() {
+        const originalText = confirmBtn.innerHTML;
+        confirmBtn.innerHTML = '<span class="material-symbols-outlined text-[20px] animate-spin">progress_activity</span> Đang xử lý tạo mã QR...';
+        confirmBtn.classList.add('opacity-90', 'pointer-events-none');
+        setTimeout(function() {
+          alert('Khởi tạo lịch hẹn thành công! Đang chuyển hướng sang trang thanh toán VietQR và xuất thẻ ra vào...');
+          confirmBtn.innerHTML = originalText;
+          confirmBtn.classList.remove('opacity-90', 'pointer-events-none');
+        }, 1200);
+      });
+    }
+  })();
+</script></main><footer class="w-full bg-surface-container-lowest shadow-[0_-1px_8px_rgba(0,0,0,0.03)] mt-auto"><div class="max-w-7xl mx-auto px-gutter-sm lg:px-gutter py-space-lg flex flex-col md:flex-row items-center justify-between gap-space-md font-body-sm text-body-sm text-on-surface-variant"><div class="flex items-center gap-space-md"><span class="font-label-md text-label-md text-on-surface">SBMS Customer Portal</span><span>© 2024 SBMS. All rights reserved.</span></div><div class="flex items-center gap-space-lg flex-wrap justify-center"><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-primary">call</span><span>Hỗ trợ kỹ thuật: <a class="font-label-md text-label-md text-primary hover:underline" href="tel:19001234">1900 1234</a></span></div><div class="flex items-center gap-space-xs"><span class="material-symbols-outlined text-[16px] text-tertiary">chat</span><span>Tư vấn trực tuyến: <a class="font-label-md text-label-md text-tertiary hover:underline" href="#">Zalo Support SBMS</a></span></div></div></div></footer></body></html>
