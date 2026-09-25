@@ -66,7 +66,6 @@ namespace sbms.backend.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("CancellationReason")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -76,7 +75,6 @@ namespace sbms.backend.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CustomerNote")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("EndTime")

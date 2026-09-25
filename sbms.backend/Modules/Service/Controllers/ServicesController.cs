@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sbms.backend.Modules.Services.DTOs;
@@ -15,6 +16,7 @@ namespace sbms.backend.Modules.Services.Controllers
             _serviceService = serviceService;
         }
         
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateServiceAsync([FromBody] ServicesCreateRequest request)
         {
@@ -23,27 +25,34 @@ namespace sbms.backend.Modules.Services.Controllers
         }
         // Note: GET nay la lay tat ca, can them POST lay active va POST lay inactive (Pharse 2)
         // Thieu phan trang
+
+        // [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> GetAllServicesAsync()
         {
             var response = await _serviceService.GetAllServicesAsync();
             return StatusCode(response.statusCode, response);
         }
+
         // Active
-        [HttpGet]
+        // [Authorize(Roles = "Admin")]
+        [HttpGet("active")]
         public async Task<IActionResult> GetActiveServicesAsync()
         {
             var response = await _serviceService.GetActiveServicesAsync();
             return StatusCode(response.statusCode, response);
         }
+
         // Active
-        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        [HttpGet("inactive")]
         public async Task<IActionResult> GetInActiveServicesAsync()
         {
             var response = await _serviceService.GetInActiveServicesAsync();
             return StatusCode(response.statusCode, response);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpadateServiceAsync([FromBody] ServicesUpdateRequest request)
         {

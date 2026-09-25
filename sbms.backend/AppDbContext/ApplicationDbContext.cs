@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using sbms.backend.Entities;
 namespace sbms.backend.AppDbContext
 {

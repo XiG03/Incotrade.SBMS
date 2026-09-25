@@ -4,9 +4,12 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using sbms.backend.AppDbContext;
+using sbms.backend.Entities;
 using sbms.backend.Helpers;
 using sbms.backend.Modules.Auth.Services;
+using sbms.backend.Modules.Bookings.Service;
 using sbms.backend.Modules.Services.Services;
+using sbms.backend.Modules.Staff.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +19,19 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(
         builder.Configuration.GetConnectionString("DefaultConnection")
     ));
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("Frontend", policy =>
+    {
+        policy
+            .WithOrigins("http://localhost:3000")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            .AllowCredentials();
+    });
+});
 
 
 // Add services to the container.
@@ -28,6 +44,9 @@ builder.Services.AddScoped<IJWTService, JWTService>();
 // Dang ky cac service cua bai test
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IServiceService, ServiceService>();
+builder.Services.AddScoped<IStaffService, StaffService>();
+builder.Services.AddScoped<IScheduleService, ScheduleService>();
+builder.Services.AddScoped<IBookingService, BookingService>();
 
 
 builder.Services.AddAuthentication(options =>
@@ -61,6 +80,20 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
+// Auto apply migrations and seed data on startup
+using (var scope = app.Services.CreateScope())
+{
+    try
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        dbContext.Database.Migrate();
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Database Migration Error: {ex.Message}");
+    }
+}
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -68,6 +101,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("Frontend");
 
 
 app.UseAuthentication();

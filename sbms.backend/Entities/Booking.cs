@@ -15,8 +15,8 @@
         public DateTime EndTime { get; set; }
         // public string Status { get; set; }
         public string Status { get; set; } = BookingStatus.Pending;
-        public string CustomerNote { get; set; }
-        public string CancellationReason { get; set; }
+        public string? CustomerNote { get; set; }
+        public string? CancellationReason { get; set; }
         public DateTime CreatedAt { get; set; }
     }
     public static class BookingStatus
@@ -25,6 +25,14 @@
         public const string Confirmed = "Confirmed";
         public const string Completed = "Completed";
         public const string Cancelled = "Cancelled";
+
+        public static bool IsValid(string status)
+        {
+            return status == Pending
+                || status == Confirmed
+                || status == Completed
+                || status == Cancelled;
+        }
     }
 }
 
