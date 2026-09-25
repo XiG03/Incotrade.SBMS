@@ -24,13 +24,14 @@ export const bookingService = {
   },
 
   // POST /api/Bookings/{id}/cancel
+  // Backend only allows cancel when status === 'Pending'
   cancelBooking: async (
     id: string,
     cancellationReason?: string
   ): Promise<ApiResponse<any>> => {
     const payload: BookingCancelRequest = {
       bookingId: id,
-      cancellationReason,
+      CancellationReason: cancellationReason, // PascalCase to match backend DTO
     };
     const response = await apiClient.post<any, ApiResponse<any>>(
       `/Bookings/${id}/cancel`,
@@ -38,6 +39,7 @@ export const bookingService = {
     );
     return response;
   },
+
 
   // GET /api/Bookings/available-slots
   getAvailableSlots: async (

@@ -11,6 +11,7 @@ export default function MyBookingsPage() {
   const [viewMode, setViewMode] = useState<'day' | 'week' | 'month' | 'schedule'>('week');
   const [selectedBookingForCancel, setSelectedBookingForCancel] = useState<BookingResponse | null>(null);
   const [cancelReason, setCancelReason] = useState<string>('');
+  const [cancelError, setCancelError] = useState<string | null>(null);
 
   // Fetch API data via useMyBookings hook
   const { data: apiResponse, isLoading, isError, refetch } = useMyBookings({
@@ -146,26 +147,50 @@ export default function MyBookingsPage() {
 
   const handleConfirmCancel = () => {
     if (!selectedBookingForCancel) return;
+    setCancelError(null);
     cancelMutation.mutate(
       { id: selectedBookingForCancel.id, reason: cancelReason },
       {
-        onSuccess: () => {
+        onSuccess: (data) => {
+          // Backend trả 400 nếu status không phải Pending → bắt lỗi từ response
+          if (data?.statusCode && data.statusCode !== 200) {
+            setCancelError(data.message || 'Không thể hủy lịch hẹn này.');
+            return;
+          }
           setSelectedBookingForCancel(null);
           setCancelReason('');
+          setCancelError(null);
           refetch();
+        },
+        onError: (err: any) => {
+          const msg =
+            err?.response?.data?.message ||
+            err?.message ||
+            'Đã xảy ra lỗi khi hủy lịch. Vui lòng thử lại.';
+          setCancelError(msg);
         },
       }
     );
+  };
+
+  const handleCloseModal = () => {
+    setSelectedBookingForCancel(null);
+    setCancelReason('');
+    setCancelError(null);
   };
 
   const getStatusBadge = (status?: string) => {
     switch (status) {
       case 'Confirmed':
         return (
-          <span className="px-2 py-0.5 rounded-full bg-[#dbeafe] text-[#1e40af] font-label-sm text-[11px] font-bold">
+          <span
+            title="Lịch đã xác nhận — không thể tự hủy. Liên hệ hotline để được hỗ trợ."
+            className="px-2 py-0.5 rounded-full bg-[#dbeafe] text-[#1e40af] font-label-sm text-[11px] font-bold cursor-default"
+          >
             Đã xác nhận
           </span>
         );
+
       case 'Pending':
         return (
           <span className="px-2 py-0.5 rounded-full bg-[#fef3c7] text-[#92400e] font-label-sm text-[11px] font-bold">
@@ -517,10 +542,11 @@ export default function MyBookingsPage() {
 
                   {/* Actions */}
                   <div className="flex items-center gap-2 self-end sm:self-center shrink-0">
-                    {item.status !== 'Cancelled' && item.status !== 'Completed' && (
+                    {/* Backend chỉ cho hủy khi status === Pending */}
+                    {item.status === 'Pending' && (
                       <button
                         type="button"
-                        onClick={() => setSelectedBookingForCancel(item)}
+                        onClick={() => { setCancelError(null); setSelectedBookingForCancel(item); }}
                         className="px-3 py-1.5 rounded-lg bg-error-container text-on-error-container hover:bg-error/20 font-label-md text-label-md transition-colors"
                       >
                         Hủy lịch
@@ -669,16 +695,30 @@ export default function MyBookingsPage() {
               </h3>
               <button
                 type="button"
-                onClick={() => setSelectedBookingForCancel(null)}
+                onClick={handleCloseModal}
                 className="text-on-surface-variant hover:text-on-surface"
               >
                 <span className="material-symbols-outlined">close</span>
               </button>
             </div>
 
-            <p className="font-body-md text-body-md text-on-surface-variant">
-              Bạn có chắc chắn muốn hủy lịch hẹn <strong>{selectedBookingForCancel.bookingCode}</strong> ({selectedBookingForCancel.serviceName}) vào ngày <strong>{selectedBookingForCancel.bookingDate}</strong>?
-            </p>
+            {/* Error Banner from API */}
+            {cancelError && (
+              <div className="flex items-start gap-2 p-3 bg-error-container/60 text-on-error-container rounded-xl border border-error/20">
+                <span className="material-symbols-outlined text-[18px] shrink-0 mt-0.5">error</span>
+                <p className="font-body-sm text-body-sm">{cancelError}</p>
+              </div>
+            )}
+
+            <div className="flex flex-col gap-2">
+              <p className="font-body-md text-body-md text-on-surface-variant">
+                Bạn có chắc chắn muốn hủy lịch hẹn <strong>{selectedBookingForCancel.bookingCode}</strong> ({selectedBookingForCancel.serviceName}) vào ngày <strong>{selectedBookingForCancel.bookingDate}</strong>?
+              </p>
+              <div className="flex items-center gap-2 px-3 py-2 bg-[#fef3c7] text-[#92400e] rounded-lg text-[12px] font-medium">
+                <span className="material-symbols-outlined text-[16px] shrink-0">info</span>
+                <span>Chỉ có thể hủy khi lịch hẹn đang ở trạng thái <strong>Chờ duyệt</strong>. Lịch đã xác nhận hoặc hoàn thành không thể tự hủy.</span>
+              </div>
+            </div>
 
             <div className="flex flex-col gap-1.5">
               <label className="font-label-md text-label-md text-on-surface font-semibold">
@@ -696,7 +736,7 @@ export default function MyBookingsPage() {
             <div className="flex items-center justify-end gap-3 pt-2">
               <button
                 type="button"
-                onClick={() => setSelectedBookingForCancel(null)}
+                onClick={handleCloseModal}
                 className="px-4 py-2 rounded-lg bg-surface-container-low text-on-surface hover:bg-surface-container font-label-md text-label-md transition-colors"
               >
                 Trở lại

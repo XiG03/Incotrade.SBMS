@@ -18,7 +18,7 @@ namespace sbms.backend.Modules.Bookings.Controllers
         }
         // Mai lam them add accesstoken
         // Mặc định ai cũng có thể làm được, kể cả admin và customer
-        [AllowAnonymous]
+        [Authorize]
         [HttpGet("my-bookings")]
         public async Task<IActionResult> GetMyBookings([FromQuery] BookingFilterRequest request)
         {
@@ -48,7 +48,7 @@ namespace sbms.backend.Modules.Bookings.Controllers
         }
 
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost("{id}/cancel")]
         public async Task<IActionResult> BookingCancelled([FromRoute] Guid id, [FromBody] BookingCancelRequest request)
         {
@@ -63,7 +63,7 @@ namespace sbms.backend.Modules.Bookings.Controllers
             return StatusCode(response.statusCode, response);
         }
 
-        [AllowAnonymous]
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> BookingCreate([FromBody] BookingCreateRequest request)
         {

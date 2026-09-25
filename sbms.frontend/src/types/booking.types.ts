@@ -37,8 +37,9 @@ export interface BookingResponse {
 export interface BookingCancelRequest {
   bookingId?: string;
   customerId?: string;
-  cancellationReason?: string;
+  CancellationReason?: string; // PascalCase matching backend DTO
 }
+
 
 export interface BookingCreateRequest {
   bookingCode?: string;

@@ -2,35 +2,132 @@
 
 Hệ thống Quản lý Dịch vụ & Đặt Lịch Hẹn (SBMS) được thiết kế hiện đại với kiến trúc **Frontend (Next.js 14 App Router, TypeScript, TailwindCSS)** kết hợp **Backend (ASP.NET Core Web API 8.0)**.
 
-Tài liệu này hướng dẫn chi tiết cách cài đặt, khởi chạy và **quy trình từng bước để kiểm thử (test demo)** toàn bộ các tính năng của hệ thống.
+Tài liệu này hướng dẫn chi tiết cách cài đặt, **cấu hình database**, **chạy migration**, **seed dữ liệu mẫu** và quy trình từng bước để kiểm thử (test demo) toàn bộ các tính năng.
 
 ---
 
-## 🛠️ 1. Yêu Cầu Môi Trường & Khởi Chạy (Setup & Startup)
+## ⚙️ 1. Cấu Hình Database (Database Configuration)
 
-### 1.1 Backend (`sbms.backend`)
-1. Yêu cầu: **.NET 8.0 SDK** & **SQL Server** (hoặc LocalDB/In-Memory DB theo cấu hình).
-2. Mở Terminal tại thư mục gốc dự án:
+### 1.1 Chuẩn bị file cấu hình `appsettings.json`
+
+File cấu hình mẫu đã được cung cấp tại [`sbms.backend/appsettings.example.json`](sbms.backend/appsettings.example.json).
+
+1. **Copy** file mẫu thành `appsettings.json`:
    ```bash
    cd sbms.backend
-   dotnet restore
-   dotnet run
+   copy appsettings.example.json appsettings.json
    ```
-3. Backend sẽ chạy mặc định tại địa chỉ: `http://localhost:5130`.
+   *(Trên Linux/macOS: `cp appsettings.example.json appsettings.json`)*
 
-### 1.2 Frontend (`sbms.frontend`)
+2. **Mở file `appsettings.json`** và chỉnh sửa chuỗi kết nối theo môi trường của bạn:
+
+   ```json
+   "ConnectionStrings": {
+     "DefaultConnection": "Server=TÊN_MÁY_CHỦ\\SQLEXPRESS;Database=SBMST;Trusted_Connection=True;TrustServerCertificate=True;"
+   }
+   ```
+
+   Các trường hợp kết nối phổ biến:
+
+   | Loại cài đặt | Connection String |
+   | :--- | :--- |
+   | **SQL Server Express cục bộ** (khuyến nghị) | `Server=.\SQLEXPRESS;Database=SBMST;Trusted_Connection=True;TrustServerCertificate=True;` |
+   | **SQL Server LocalDB** | `Server=(localdb)\\mssqllocaldb;Database=SBMST;Trusted_Connection=True;` |
+   | **SQL Server với User/Password** | `Server=localhost;Database=SBMST;User Id=sa;Password=YourPassword123;TrustServerCertificate=True;` |
+   | **Tên máy cụ thể** (như máy gốc `MSI\SQLEXPRESS`) | `Server=MSI\\SQLEXPRESS;Database=SBMST;Trusted_Connection=True;TrustServerCertificate=True;` |
+
+   > **Lưu ý:** Thay `TÊN_MÁY_CHỦ` bằng tên máy tính thực tế của bạn (xem trong SQL Server Management Studio).
+
+3. **Giữ nguyên cấu hình JWT** — các giá trị mặc định đã được cài sẵn và phù hợp cho môi trường demo:
+   ```json
+   "Jwt": {
+     "Key": "THIS_IS_MY_SUPER_SECRET_KEY_FOR_JWT_TOKEN_GENERATION_1234567890_ABCDEF",
+     "Issuer": "MyAwesomeApp",
+     "Audience": "MyAwesomeAudience"
+   }
+   ```
+
+---
+
+## 🗄️ 2. Chạy Migration & Tạo Database
+
+> **Yêu cầu:** Đã cài đặt **EF Core CLI** (`dotnet-ef`). Nếu chưa có, chạy:
+> ```bash
+> dotnet tool install --global dotnet-ef
+> ```
+
+1. Di chuyển vào thư mục backend:
+   ```bash
+   cd sbms.backend
+   ```
+
+2. **Áp dụng migration** để tạo cấu trúc bảng trong SQL Server:
+   ```bash
+   dotnet ef database update
+   ```
+   Lệnh này sẽ tự động tạo database `SBMST` (nếu chưa tồn tại) và tạo toàn bộ các bảng:
+   `AppUsers`, `Customers`, `Staffs`, `Services`, `Bookings`, `WorkSchedules`, `RefreshTokens`.
+
+3. *(Tùy chọn)* Xem danh sách các migration hiện có:
+   ```bash
+   dotnet ef migrations list
+   ```
+
+---
+
+## 🌱 3. Chạy Script Sinh Dữ Liệu Mẫu (Seed Data)
+
+File script SQL đã được chuẩn bị sẵn tại [`sbms.backend/seed_data.sql`](sbms.backend/seed_data.sql).
+
+Script bao gồm:
+- **1 tài khoản Admin** (`admin` / `Demo@123456`)
+- **2 tài khoản Customer** (`nguyenthianh` và `tranminhduc`, cùng mật khẩu `Demo@123456`)
+- **2 nhân viên / chuyên viên** (BS. Lê Thùy Linh, KTV. Trần Thu Thảo)
+- **6 ca làm việc** (WorkSchedule) phân bổ trong tuần tới
+- **5 dịch vụ** (Hydra Facial, Lấy cao răng, Massage đá nóng, Điều trị mụn, Phục hồi tóc Keratin)
+- **5 booking** với đầy đủ 3 trạng thái: `Pending`, `Confirmed`, `Completed`, `Cancelled`
+
+### Cách thực thi script:
+
+**Cách 1 — SQL Server Management Studio (SSMS):**
+1. Mở SSMS, kết nối vào SQL Server của bạn.
+2. Chọn database `SBMST` (đã tạo ở bước Migration).
+3. Mở file `sbms.backend/seed_data.sql` → bấm **Execute (F5)**.
+
+**Cách 2 — sqlcmd (Command Line):**
+```bash
+sqlcmd -S .\SQLEXPRESS -d SBMST -i sbms.backend/seed_data.sql
+```
+*(Thay `.\SQLEXPRESS` bằng tên SQL Server của bạn nếu khác)*
+
+**Cách 3 — Azure Data Studio:**
+1. Kết nối database `SBMST`.
+2. Mở file `seed_data.sql` → bấm **Run**.
+
+> **Lưu ý về mật khẩu:** Script sử dụng BCrypt hash sẵn. Mật khẩu đăng nhập mặc định của **tất cả tài khoản** là: **`Demo@123456`**
+
+---
+
+## 🚀 4. Khởi Chạy Hệ Thống
+
+### 4.1 Backend (`sbms.backend`)
+```bash
+cd sbms.backend
+dotnet run
+```
+Backend chạy tại: `http://localhost:5130`
+
+### 4.2 Frontend (`sbms.frontend`)
 1. Yêu cầu: **Node.js 18+** & **npm**.
-2. Mở Terminal mới tại thư mục gốc dự án:
+2. Mở Terminal mới:
    ```bash
    cd sbms.frontend
    npm install
    npm run dev
    ```
-3. Frontend sẽ chạy tại địa chỉ: `http://localhost:3000`.
+3. Frontend chạy tại: `http://localhost:3000`.
 
----
-
-## 🔐 2. Phân Quyền Vai Trò & Đăng Nhập (Role & Auth Flow)
+## 🔐 5. Phân Quyền Vai Trò & Đăng Nhập (Role & Auth Flow)
 
 Hệ thống phân chia 2 vai trò người dùng chính dựa trên **JWT AccessToken**:
 
@@ -49,7 +146,7 @@ Hệ thống phân chia 2 vai trò người dùng chính dựa trên **JWT Acces
 
 ---
 
-## 📋 3. Quy Trình Test Các Kịch Bản Demo (Step-by-Step Test Scenarios)
+## 📋 6. Quy Trình Test Các Kịch Bản Demo (Step-by-Step Test Scenarios)
 
 ### Kịch bản 1: Tra Cứu Khung Giờ Trống Tách Biệt (`/available-slots`)
 - **Đường dẫn**: `http://localhost:3000/available-slots`
@@ -131,7 +228,7 @@ Luồng đặt lịch trải qua **3 bước chuẩn hóa (Stepper UI)**:
 
 ---
 
-## ⚙️ 4. Structure Thư Mục Dự Án (Folder Structure)
+## ⚙️ 7. Cấu Trúc Thư Mục Dự Án (Folder Structure)
 
 ```text
 Incotrade.Test/
@@ -167,7 +264,7 @@ Incotrade.Test/
 
 ---
 
-## ✅ 5. Tổng Kết & Danh Sách API Đã Tích Hợp
+## ✅ 8. Tổng Kết & Danh Sách API Đã Tích Hợp
 
 | Module | Endpoint Backend | Method | Tương ứng ở Frontend |
 | :--- | :--- | :--- | :--- |

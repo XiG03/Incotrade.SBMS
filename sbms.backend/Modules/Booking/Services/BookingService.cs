@@ -52,6 +52,7 @@ namespace sbms.backend.Modules.Bookings.Service
             }
 
             booking.Status = BookingStatus.Cancelled;
+            booking.CancellationReason = request.CancellationReason;
             var result = await _context.SaveChangesAsync();
             if (result == 0)
             {
@@ -122,6 +123,23 @@ namespace sbms.backend.Modules.Bookings.Service
                     {
                         statusCode = StatusCodes.Status400BadRequest,
                         Message = $"Staff {request.StaffId} not found or inactive.",
+                        Data = null
+                    };
+                }
+
+                var isWithinWorkSchedule = await _context.WorkSchedules.AnyAsync(schedule =>
+                        schedule.StaffId == request.StaffId &&
+                        schedule.WorkDate.Date == request.BookingDate.ToDateTime(TimeOnly.MinValue).Date &&
+                        schedule.StartTime <= startDateTime &&
+                        schedule.EndTime >= endDateTime);
+
+                if (!isWithinWorkSchedule)
+                {
+                    await transaction.RollbackAsync();
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status400BadRequest,
+                        Message = "Booking is outside staff working hours.",
                         Data = null
                     };
                 }
