@@ -7,7 +7,7 @@ using sbms.backend.AppDbContext;
 using sbms.backend.Entities;
 using sbms.backend.Helpers;
 using sbms.backend.Modules.Auth.Services;
-using sbms.backend.Modules.Booking.Service;
+using sbms.backend.Modules.Bookings.Service;
 using sbms.backend.Modules.Services.Services;
 using sbms.backend.Modules.Staff.Service;
 

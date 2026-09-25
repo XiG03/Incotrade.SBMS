@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuthStore } from '@/store/authStore';
@@ -12,13 +12,48 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
-  const { logout } = useAuthStore();
+  const { token, role, logout } = useAuthStore();
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [isChecking, setIsChecking] = useState(true);
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const savedToken = token || localStorage.getItem('token');
+      const savedRole = role || localStorage.getItem('role');
+
+      if (!savedToken) {
+        // Chưa đăng nhập -> chuyển về trang đăng nhập
+        router.replace('/login');
+        return;
+      }
+
+      if (savedRole?.toLowerCase() !== 'admin') {
+        // Nếu là Customer hoặc role không phải Admin -> Chặn truy cập & chuyển về lịch hẹn của khách
+        router.replace('/my-bookings');
+        return;
+      }
+
+      setIsChecking(false);
+    }
+  }, [token, role, router]);
 
   const handleLogout = () => {
     logout();
     router.push('/login');
   };
+
+  if (isChecking) {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-4">
+        <span className="material-symbols-outlined text-[36px] text-primary animate-spin">
+          sync
+        </span>
+        <p className="mt-2 font-body-md text-body-md text-on-surface-variant font-medium">
+          Đang kiểm tra quyền truy cập Quản trị...
+        </p>
+      </div>
+    );
+  }
 
   const navLinks = [
     { label: 'Quản lý booking', path: '/bookings', icon: 'calendar_month', badge: '14' },

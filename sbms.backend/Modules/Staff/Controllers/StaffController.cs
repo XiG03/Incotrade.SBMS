@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sbms.backend.Modules.Staff.Service;
@@ -14,6 +15,7 @@ namespace sbms.backend.Modules.Staff.Controllers
             _staffServices = staffServices;
         }
 
+        // [Authorize(Roles = "Admin")]
         [HttpGet]
         public async Task<IActionResult> StaffGetAll()
         {

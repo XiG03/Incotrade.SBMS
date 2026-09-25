@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace sbms.backend.Modules.Booking.DTOs
+namespace sbms.backend.Modules.Bookings.DTOs
 {
     public class BookingFilterRequest
     {

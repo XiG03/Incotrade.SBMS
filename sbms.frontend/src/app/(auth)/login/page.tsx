@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { authService } from '@/services/auth.service';
 import { useAuthStore } from '@/store/authStore';
+import { parseJwtToken } from '@/lib/utils';
 
 const loginSchema = z.object({
   username: z.string().min(1, 'Vui lòng nhập tên đăng nhập hoặc email'),
@@ -18,7 +19,7 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
   const router = useRouter();
-  const setToken = useAuthStore((state) => state.setToken);
+  const setAuth = useAuthStore((state) => state.setAuth);
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -46,8 +47,17 @@ export default function LoginPage() {
       });
 
       if (response.statusCode === 200 && response.data?.accessToken) {
-        setToken(response.data.accessToken);
-        router.push('/services');
+        const token = response.data.accessToken;
+        setAuth(token);
+
+        const parsed = parseJwtToken(token);
+        const userRole = (parsed?.role || '').toLowerCase();
+
+        if (userRole === 'admin') {
+          router.push('/services');
+        } else {
+          router.push('/my-bookings');
+        }
       } else {
         setErrorMessage(response.message || 'Tên đăng nhập hoặc mật khẩu không đúng');
       }

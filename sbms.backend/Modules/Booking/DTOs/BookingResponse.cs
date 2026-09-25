@@ -1,4 +1,4 @@
-﻿namespace sbms.backend.Modules.Booking.DTOs
+﻿namespace sbms.backend.Modules.Bookings.DTOs
 {
     public class BookingResponse
     {
@@ -13,6 +13,7 @@
         public DateOnly BookingDate { get; set; }
         public TimeOnly StartTime { get; set; }
         public TimeOnly EndTime { get; set; }
+        public string status {get; set;}
         public string CustomerNote { get; set; }
         public string CancellationReason { get; set; }
         public DateTime CreatedAt { get; set; }

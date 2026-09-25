@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import QueryProvider from "@/components/providers/QueryProvider";
 
 export const metadata: Metadata = {
   title: "SBMS - Service Booking Management System",
@@ -26,7 +27,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-surface font-body-md text-on-surface antialiased min-h-screen flex flex-col">
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );

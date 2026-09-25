@@ -1,12 +1,13 @@
-﻿using System.Net.WebSockets;
+using System.Net.WebSockets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi;
 using sbms.backend.AppDbContext;
 using sbms.backend.Entities;
 using sbms.backend.Helpers;
-using sbms.backend.Modules.Booking.DTOs;
+using sbms.backend.Modules.Bookings.DTOs;
 
-namespace sbms.backend.Modules.Booking.Service
+namespace sbms.backend.Modules.Bookings.Service
 {
     public class BookingService : IBookingService
     {
@@ -16,26 +17,231 @@ namespace sbms.backend.Modules.Booking.Service
             _context = context;
         }
 
-        public Task<APIResponse<BookingUpdateResponse>> BookingCancelAsync(Guid id)
+        public async Task<APIResponse<BookingUpdateResponse>> BookingCancelAsync(BookingCancelRequest request)
         {
-            var booking = _context.Bookings
-                            .Where(b => b.Id == id)
-                            .FirstOrDefault();
-            if(booking == null)
+            var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.Id == request.bookingId);
+
+            if (booking == null)
             {
-                
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status400BadRequest,
+                    Message = "Booking isn't exsits",
+                    Data = null
+                };
             }
-            throw new NotImplementedException();
+
+            if (booking.CustomerId != request.customerId)
+            {
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status400BadRequest,
+                    Message = "You do not have permission to update this booking.",
+                    Data = null
+                };
+            }
+
+            if (booking.Status == BookingStatus.Confirmed || booking.Status == BookingStatus.Completed || booking.Status == BookingStatus.Cancelled)
+            {
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status400BadRequest,
+                    Message = "This booking cannot be updated because it has already been confirmed, completed or cancelled.",
+                    Data = null
+                };
+            }
+
+            booking.Status = BookingStatus.Cancelled;
+            var result = await _context.SaveChangesAsync();
+            if (result == 0)
+            {
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status500InternalServerError,
+                    Message = "Failed to cancel the booking.",
+                    Data = null
+                };
+            }
+
+            return new APIResponse<BookingUpdateResponse>
+            {
+                statusCode = StatusCodes.Status200OK,
+                Message = "Booking cancelled successfully.",
+                Data = new BookingUpdateResponse
+                {
+                    Id = booking.Id,
+                    BookingCode = booking.BookingCode,
+                    Status = booking.Status
+                }
+            };
+            // throw new NotImplementedException();
         }
 
-        public Task<APIResponse<BookingCreateResponse>> BookingCreateAsync(BookingCreateRequest request)
+        public async Task<APIResponse<BookingCreateResponse>> BookingCreateAsync(BookingCreateRequest request)
         {
-            throw new NotImplementedException();
+
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                var now = DateTime.UtcNow;
+
+                var startDateTime = request.BookingDate.ToDateTime(request.StartTime);
+
+                var endDateTime = startDateTime.AddMinutes((double)request.DurationMinutes);
+
+                if (startDateTime <= now)
+                {
+                    await transaction.RollbackAsync();
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status400BadRequest,
+                        Message = "Booking cannot be in the past.",
+                        Data = null
+                    };
+                }
+
+                if (endDateTime <= startDateTime)
+                {
+                    await transaction.RollbackAsync();
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status400BadRequest,
+                        Message = "End time must be greater than start time.",
+                        Data = null
+                    };
+                }
+
+                // Gia su tai khoan nguoi dung luon luon active
+
+                var staffActive = await _context.Staffs.AnyAsync(s => s.Id == request.StaffId && s.IsActive == true);
+
+                if (staffActive == false)
+                {
+                    await transaction.RollbackAsync();
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status400BadRequest,
+                        Message = $"Staff {request.StaffId} not found or inactive.",
+                        Data = null
+                    };
+                }
+
+                var bookingConflict = await _context.Bookings
+                                        .AnyAsync(b =>
+                                            b.StaffId == request.StaffId &&
+                                            b.StartTime < endDateTime &&
+                                            b.EndTime > startDateTime &&
+                                            b.Status != BookingStatus.Cancelled);
+
+                if (bookingConflict)
+                {
+                    await transaction.RollbackAsync();
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status409Conflict,
+                        Message = "Work schedule conflicts with an existing schedule.",
+                        Data = null
+                    };
+                }
+
+
+                var BookingId = Guid.NewGuid();
+
+                var booking = await _context.Bookings.AddAsync(new Booking
+                {
+                    Id = BookingId,
+                    CustomerId = request.CustomerId,
+                    BookingCode = request.BookingCode,
+                    ServiceId = request.ServiceId,
+                    StaffId = request.StaffId,
+                    BookingDate = request.BookingDate.ToDateTime(TimeOnly.MinValue),
+                    StartTime = startDateTime,
+                    EndTime = endDateTime,
+                    CreatedAt = DateTime.UtcNow
+
+                });
+
+                var result = await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+
+                if (result == 0)
+                {
+                    return new APIResponse<BookingCreateResponse>
+                    {
+                        statusCode = StatusCodes.Status500InternalServerError,
+                        Message = "Failed to create work schedule.",
+                        Data = null
+                    };
+                }
+                return new APIResponse<BookingCreateResponse>
+                {
+                    statusCode = StatusCodes.Status201Created,
+                    Message = "Work schedule created successfully.",
+                    Data = new BookingCreateResponse
+                    {
+                        Id = BookingId,
+                        StaffId = request.StaffId,
+                        BookingDate = request.BookingDate,
+                        StartTime = TimeOnly.FromDateTime(startDateTime),
+                        EndTime = TimeOnly.FromDateTime(endDateTime)
+                    }
+                };
+
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return new APIResponse<BookingCreateResponse>
+                {
+                    statusCode = StatusCodes.Status500InternalServerError,
+                    Message = $"Internal Server Error {ex.Message} Inner: {ex.InnerException?.Message}",
+                    Data = null
+                };
+            }
+            // throw new NotImplementedException();
         }
 
-        public Task<APIResponse<BookingUpdateResponse>> BookingUpdateStatusAsync(Guid id, string status)
+        // chi co admin update 
+        public async Task<APIResponse<BookingUpdateResponse>> BookingUpdateStatusAsync(Guid bookingId, string status)
         {
-            throw new NotImplementedException();
+            var booking = await _context.Bookings.FirstOrDefaultAsync(b => b.Id == bookingId);
+
+            if (booking == null)
+            {
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status400BadRequest,
+                    Message = "Booking is not exists",
+                    Data = null
+                };
+            }
+
+            if (!BookingStatus.IsValid(status))
+            {
+                return new APIResponse<BookingUpdateResponse>
+                {
+                    statusCode = StatusCodes.Status400BadRequest,
+                    Message = $"Invalid booking status: {status}",
+                    Data = null
+                };
+            }
+
+            booking.Status = status;
+            await _context.SaveChangesAsync();
+
+            var response = new BookingUpdateResponse
+            {
+                Id = booking.Id,
+                BookingCode = booking.BookingCode,
+                Status = booking.Status
+            };
+
+            return new APIResponse<BookingUpdateResponse>
+            {
+                statusCode = StatusCodes.Status200OK,
+                Message = "Booking status updated successfully",
+                Data = response
+            };
         }
 
         public async Task<APIResponse<PagedResponse<List<BookingResponse>>>> GetAllBookingsAsync(BookingFilterRequest request)
@@ -73,6 +279,7 @@ namespace sbms.backend.Modules.Booking.Service
                     BookingDate = DateOnly.FromDateTime(b.BookingDate),
                     StartTime = TimeOnly.FromDateTime(b.StartTime),
                     EndTime = TimeOnly.FromDateTime(b.EndTime),
+                    status = b.Status,
 
                     CustomerNote = b.CustomerNote,
                     CancellationReason = b.CancellationReason,
@@ -137,7 +344,7 @@ namespace sbms.backend.Modules.Booking.Service
                 var fromDate = request.FromDate.Value.ToDateTime(TimeOnly.MinValue);
 
                 workScheduleQuery = workScheduleQuery
-                    .Where(ws => ws.WorkDate.Date >= fromDate);
+                    .Where(b => b.WorkDate.Date >= fromDate);
 
                 bookingQuery = bookingQuery
                     .Where(b => b.BookingDate.Date >= fromDate);
@@ -148,19 +355,19 @@ namespace sbms.backend.Modules.Booking.Service
                 var toDate = request.ToDate.Value.ToDateTime(TimeOnly.MinValue);
 
                 workScheduleQuery = workScheduleQuery
-                    .Where(ws => ws.WorkDate.Date <= toDate);
+                    .Where(b => b.WorkDate.Date <= toDate);
 
                 bookingQuery = bookingQuery
                     .Where(b => b.BookingDate.Date <= toDate);
             }
 
-            var schedules = await workScheduleQuery.Select(ws => new
+            var schedules = await workScheduleQuery.Select(b => new
             {
-                ws.StaffId,
-                ws.Staff.FullName,
-                ws.WorkDate,
-                ws.StartTime,
-                ws.EndTime
+                b.StaffId,
+                b.Staff.FullName,
+                b.WorkDate,
+                b.StartTime,
+                b.EndTime
             }).ToListAsync();
 
             var bookings = await bookingQuery.Select(b => new
@@ -185,7 +392,7 @@ namespace sbms.backend.Modules.Booking.Service
                     var bookingStart = booking.StartTime.TimeOfDay;
                     var bookingEnd = booking.EndTime.TimeOfDay;
 
-                    if (currentTime < bookingStart)
+                    if (currentTime <= bookingStart)
                     {
                         result.Add(new AvailableSlotResponse
                         {
@@ -218,7 +425,7 @@ namespace sbms.backend.Modules.Booking.Service
             {
                 return new APIResponse<PagedResponse<List<AvailableSlotResponse>>>
                 {
-                    statusCode = StatusCodes.Status200OK,
+                    statusCode = StatusCodes.Status404NotFound,
                     Message = "Available slot not found",
                     Data = new PagedResponse<List<AvailableSlotResponse>>
                     {
@@ -253,10 +460,10 @@ namespace sbms.backend.Modules.Booking.Service
             };
         }
 
-        public async Task<APIResponse<PagedResponse<List<BookingResponse>>>> GetMyBookingsAsync(Guid id, BookingFilterRequest request)
+        public async Task<APIResponse<PagedResponse<List<BookingResponse>>>> GetMyBookingsAsync(Guid userId, BookingFilterRequest request)
         {
             var query = _context.Bookings
-                 .Where(b => b.CustomerId == id)
+                 .Where(b => b.CustomerId == userId)
                  .AsNoTracking();
             var count = await query.CountAsync();
 
@@ -289,6 +496,7 @@ namespace sbms.backend.Modules.Booking.Service
                     BookingDate = DateOnly.FromDateTime(b.BookingDate),
                     StartTime = TimeOnly.FromDateTime(b.StartTime),
                     EndTime = TimeOnly.FromDateTime(b.EndTime),
+                    status = b.Status,
 
                     CustomerNote = b.CustomerNote,
                     CancellationReason = b.CancellationReason,

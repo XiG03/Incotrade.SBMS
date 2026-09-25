@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using sbms.backend.Modules.Staff.DTOs;
@@ -14,6 +15,8 @@ namespace sbms.backend.Modules.Staff.Controllers
         {
             _scheduleService = scheduleService;
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpGet("{id:guid}/schedules")]
         public async Task<IActionResult> GetStaffWorkSchedules(Guid id)
         {
@@ -21,6 +24,8 @@ namespace sbms.backend.Modules.Staff.Controllers
 
             return StatusCode(response.statusCode, response);
         }
+
+        [Authorize(Roles = "Admin")]
         [HttpPost("{id:guid}/schedules")]
         public async Task<IActionResult> CreateStaffSchedule(Guid id, [FromBody] CreateStaffScheduleRequest request)
         {

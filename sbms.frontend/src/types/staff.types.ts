@@ -1,6 +1,7 @@
 export interface StaffResponse {
   id: string;
   fullname: string;
+  fullName?: string;
   email: string;
   isActive: boolean;
 }
